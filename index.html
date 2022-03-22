@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="main.css">
+        <title>Signature Drawing</title>
+    </head>
+    <body>
+        <canvas id="canvas"></canvas>
+
+        <button onclick="downloadCanvas();">Save</button>
+
+        <script>
+            const canvas = document.getElementById("canvas");
+            const ctx = canvas.getContext('2d');
+            canvas.width = window.innerWidth / 2;
+            canvas.height = window.innerHeight / 2;
+            canvas.style.background = "white";
+
+            let mouseX = 0;
+            let mouseY = 0;
+
+            let isDrawing = false;
+            canvas.addEventListener("mousedown", function(e) {
+                isDrawing = true;
+
+                ctx.beginPath();
+                mouseX = e.clientX;
+                mouseY = e.clientY;
+                ctx.moveTo(mouseX, mouseY)
+
+            })
+
+            canvas.addEventListener("mousemove", function(e) {
+                if (isDrawing) {
+                    ctx.lineTo(e.clientX, e.clientY);
+                    ctx.stroke();
+
+                }
+                
+
+            })
+
+            canvas.addEventListener("mouseup", function(e) {
+                is.isDrawing = false;
+
+            })
+
+            function downloadCanvas() {
+                var imageData = canvas.toDataUrl("image/png");
+                let anchorTag = document.createElement("a");
+                document.body.appendChild(anchorTag);
+                anchorTag.href = imageData;
+                anchorTag.download = "imageData";
+                document.body.removeChild(anchorTag);
+            }
+        </script>
+    </body>
